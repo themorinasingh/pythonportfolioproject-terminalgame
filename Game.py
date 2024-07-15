@@ -13,12 +13,21 @@ class Board:
 
     def move(self,player):
         print("{} Choose a number from 1 to 9.".format(player.name))
-        number = int(input())
-        player.moves.append(number)
+        number = input()
+
+        while number not in "123456789" :
+            print("choose a number between 1 and 9".title())
+            number = input()
+
+        while self.board_design[int(number)] != " " :
+            print("choose a valid move on the board".title())
+            number = input()
+
+        player.moves.append(int(number))
         if player.char == "X" :
-            self.board_design[number] = "X"
+            self.board_design[int(number)] = "X"
         elif player.char == "O" :
-            self.board_design[number] = "O"
+            self.board_design[int(number)] = "O"
 
     def who_wins(self, player) :
         winning_combos = [ [1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8], [3,6,9], [1,5,9], [3,5,7]]
@@ -30,6 +39,10 @@ class Board:
             
             if win_counter == 3 :
                 print("{} wins the game".format(player.name))
+                exit()
+
+    def __repr__(self) :
+        return "I am tic tac tow, i am tick tac tow"
 
 
 
@@ -51,10 +64,17 @@ player_2 = Player(player2_name)
 
 player_1.char = input("{} Do you choose X or O: \n".format(player_1.name)).upper()
 
+while player_1.char not in [ "X", "O"]:
+
+    player_1.char = input("{} you can only choose X or O: \n".format(player_1.name)).upper()
+
+
+
 if player_1.char == "X" :
     player_2.char = "O"
 elif player_1.char == "O":
     player_2.char = "X"
+    
 
 print("{} you have been assigned {}".format(player_2.name, player_2.char))
 
